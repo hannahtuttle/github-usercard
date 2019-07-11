@@ -2,8 +2,12 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards')
+
 axios.get('https://api.github.com/users/hannahtuttle')
 .then((data) => {
+  const userObject = data.data
+  cards.appendChild(gitUser(userObject[avatar_url], userObject[name], userObject[login], userObject[location], userObject[html_url], userObject[followers], userObject[following], userObject[bio]))
   console.log('my githib data', data.data)
 })
 .catch((error) => {
@@ -20,6 +24,8 @@ axios.get('https://api.github.com/users/hannahtuttle')
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -52,7 +58,7 @@ const followersArray = [];
 </div>
 
 */
-function gitUser (image, fullname, username, locate, pro, proTag, follower, follows, biography) {
+function gitUser (image, fullname, username, locate, proTag, follower, follows, biography) {
 
   const card = document.createElement('div')
   const img = document.createElement('img')
@@ -63,7 +69,7 @@ function gitUser (image, fullname, username, locate, pro, proTag, follower, foll
   const profile = document.createElement('p')
   const profileTag = document.createElement('a')
   const followers = document.createElement('p')
-  const folowing = document.createElement('p')
+  const following = document.createElement('p')
   const bio = document.createElement('p')
 
   card.classList.add('card')
@@ -71,8 +77,27 @@ function gitUser (image, fullname, username, locate, pro, proTag, follower, foll
   name.classList.add('name')
   userName.classList.add('username')
 
+  img.src = image
+  name.textContent = fullname
+  userName.textContent = username
+  location.textContent = `Location: ${locate}`
+  profile.textContent = `Profile:`
+  profileTag.textContent = proTag
+  followers.textContent = `Followers: ${follower}`
+  following.textContent = `Following: ${follows}`
+  bio.textContent = `Bio: ${biography}`
 
+  img.appendChild(card)
+  cardInfo.appendChild(card)
+  name.appendChild(cardInfo)
+  userName.appendChild(cardInfo)
+  location.appendChild(cardInfo)
+  profile.appendChild(cardInfo)
+  followers.appendChild(cardInfo)
+  following.appendChild(cardInfo)
+  bio.appendChild(cardInfo)
 
+return card
 }
 
 /* List of LS Instructors Github username's: 
