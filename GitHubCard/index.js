@@ -52,6 +52,28 @@ const followersArray = [];
 </div>
 
 */
+function gitUser (image, fullname, username, locate, pro, proTag, follower, follows, biography) {
+
+  const card = document.createElement('div')
+  const img = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const name = document.createElement('h3')
+  const userName = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const profileTag = document.createElement('a')
+  const followers = document.createElement('p')
+  const folowing = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  userName.classList.add('username')
+
+
+
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
