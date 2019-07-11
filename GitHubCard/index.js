@@ -2,16 +2,20 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-const cards = document.querySelector('.cards')
+//const placeHolder = document.querySelector('.cards')
 
 axios.get('https://api.github.com/users/hannahtuttle')
-.then((data) => {
+.then(data => {
+  // followersArray.forEach(element => {
+  // element = data.data
+  // document.querySelector('.cards').appendChild(gitUser(element))
+  // })
   const userObject = data.data
-  cards.appendChild(gitUser(userObject[avatar_url], userObject[name], userObject[login], userObject[location], userObject[html_url], userObject[followers], userObject[following], userObject[bio]))
+  document.querySelector('.cards').appendChild(gitUser(userObject))
   console.log('my githib data', data.data)
 })
 .catch((error) => {
-  console.log('error access github axios', error)
+  console.log('error accessing github axios', error)
 })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -37,8 +41,23 @@ axios.get('https://api.github.com/users/hannahtuttle')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['https://api.github.com/users/tetondan',
+'https://api.github.com/users/dustinmyers',
+  'https://api.github.com/users/justsml',
+  'https://api.github.com/users/luishrd',
+  'https://api.github.com/users/bigknell'];
 
+  followersArray.forEach(element => {
+        axios.get(element)
+    .then(data => {
+      const userObject = data.data
+      document.querySelector('.cards').appendChild(gitUser(userObject))
+      console.log('my githib data', data.data)
+    })
+    .catch((error) => {
+      console.log('error accessing github axios', error)
+    })
+  })
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -58,7 +77,7 @@ const followersArray = [];
 </div>
 
 */
-function gitUser (image, fullname, username, locate, proTag, follower, follows, biography) {
+function gitUser (object) {
 
   const card = document.createElement('div')
   const img = document.createElement('img')
@@ -77,25 +96,26 @@ function gitUser (image, fullname, username, locate, proTag, follower, follows, 
   name.classList.add('name')
   userName.classList.add('username')
 
-  img.src = image
-  name.textContent = fullname
-  userName.textContent = username
-  location.textContent = `Location: ${locate}`
-  profile.textContent = `Profile:`
-  profileTag.textContent = proTag
-  followers.textContent = `Followers: ${follower}`
-  following.textContent = `Following: ${follows}`
-  bio.textContent = `Bio: ${biography}`
+  img.src = object.avatar_url
+  name.textContent = object.name
+  userName.textContent = object.login
+  location.textContent = `Location: ${object.location}`
+  profileTag.href = object.html_url
+  profileTag.textContent = `Profile: ${object.html_url}`
+  followers.textContent = `Followers: ${object.followers}`
+  following.textContent = `Following: ${object.following}`
+  bio.textContent = `Bio: ${object.bio}`
 
-  img.appendChild(card)
-  cardInfo.appendChild(card)
-  name.appendChild(cardInfo)
-  userName.appendChild(cardInfo)
-  location.appendChild(cardInfo)
-  profile.appendChild(cardInfo)
-  followers.appendChild(cardInfo)
-  following.appendChild(cardInfo)
-  bio.appendChild(cardInfo)
+  card.appendChild(img)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+  profile.appendChild(profileTag)
 
 return card
 }
